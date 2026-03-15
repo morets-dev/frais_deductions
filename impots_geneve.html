@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-list Fiscale Genève 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        /* Style pour barrer le texte quand on coche */
+        .checkbox-custom:checked + label { text-decoration: line-through; opacity: 0.6; }
+        @media print {
+            .no-print { display: none; }
+            .print-break { page-break-after: always; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 leading-relaxed pb-12">
+
+    <!-- En-tête -->
+    <header class="bg-indigo-900 text-white py-12 mb-8 shadow-lg">
+        <div class="container mx-auto px-4 max-w-4xl text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">Déclaration d'Impôts 2025</h1>
+            <p class="text-indigo-200 text-lg">Liste complète des justificatifs - Personnes Physiques (Genève)</p>
+            <div class="mt-6 flex justify-center gap-4 no-print">
+                <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-full font-semibold transition shadow-md">
+                    Imprimer la liste
+                </button>
+                <button onclick="copyCurrentUrl()" class="bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-full border border-white/30 transition">
+                    Partager la page
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 max-w-4xl">
+
+        <!-- Notification de copie -->
+        <div id="copy-alert" class="hidden fixed top-5 right-5 bg-green-600 text-white px-6 py-3 rounded-lg shadow-xl z-50">
+            Lien copié dans le presse-papier !
+        </div>
+
+        <!-- Section 1 : Revenus -->
+        <section class="mb-8 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-slate-200">
+                <h2 class="text-xl font-bold text-indigo-900 flex items-center">
+                    <span class="mr-3">1.</span> Revenus de l'activité lucrative et de remplacement
+                </h2>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="flex items-start">
+                    <input type="checkbox" id="rev-1" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="rev-1" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Certificats de salaire :</span> Pour chaque emploi (principal et accessoire). 
+                        <br><small class="text-slate-500 italic">Vérifiez la case F (véhicule de service) et G (frais de formation payés par l'employeur).</small>
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="rev-5" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="rev-5" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Allocations familiales :</span> 
+                        <br><small class="text-slate-500 italic">Note : Si elles sont absentes de votre certificat de salaire, veuillez indiquer le montant reçu pour chaque enfant.</small>
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="rev-6" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="rev-6" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Pensions alimentaires reçues :</span> Pour vous-même ou pour vos enfants.
+                        <br><small class="text-slate-500 italic">Justificatifs : Copie du jugement de divorce ou de la convention de séparation, ainsi que la preuve des montants encaissés.</small>
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="rev-2" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="rev-2" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Indépendants :</span> Bilan et Compte de résultat signés, accompagnés d'un état de la fortune commerciale.
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="rev-3" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="rev-3" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Remplacements :</span> Attestations Chômage, Indemnités journalières (maladie/LAA) ou APG (maternité/paternité).
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="rev-4" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="rev-4" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Rentes :</span> Relevés annuels AVS, AI ou LPP (Suisse et étranger).
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 : Fortune Mobilière -->
+        <section class="mb-8 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-slate-200">
+                <h2 class="text-xl font-bold text-indigo-900 flex items-center">
+                    <span class="mr-3">2.</span> Fortune et placements mondiaux
+                </h2>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="flex items-start">
+                    <input type="checkbox" id="for-1" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="for-1" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Document bancaire :</span> Relevé fiscal de la banque avec le solde du compte au 31 décembre (Suisse, étranger, neo-banque)
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="for-7" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="for-7" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Relevé fiscal de portefeuille d'investissement :</span> Document annuel consolidé de votre banque ou gérant de fortune.
+                        <br><small class="text-slate-500 italic">Il doit détailler la valeur fiscale de chaque titre au 31.12, ainsi que le détail des revenus et des retenues d'impôt anticipé.</small>
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="for-2" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="for-2" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Participations (PME, Sàrl, SA non cotées) :</span> 
+                        Renseigner le <span class="underline">nombre de parts</span> et la <span class="underline">valeur</span>.
+                        <br><small class="text-slate-500 italic">Justificatifs : Estimation fiscale officielle ou comptes annuels (pour les sociétés étrangères).</small>
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="for-8" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="for-8" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Dettes :</span> Relevés au 31.12 des montants dus et des intérêts payés.
+                        <br><small class="text-slate-500 italic text-indigo-700">Exemples : Crédit à la consommation (Leasing, prêt personnel), solde de carte de crédit, emprunt privé (famille ou tiers).</small>
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="for-3" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="for-3" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Véhicules (Voitures, motos, bateaux) :</span> Uniquement la <span class="underline">facture d'achat</span> pour les acquisitions de l'année.
+                        <br><small class="text-slate-500 italic">Pour les achats passés, l’administration fiscale calcule un amortissement.</small>
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="for-4" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="for-4" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Objets de valeur :</span> Bijoux, montres de prix et collections.
+                        <br><small class="text-slate-500 italic text-indigo-700 font-semibold">Note : Déclaration obligatoire si la valeur totale dépasse CHF 5'000.- (tolérance administrative en deçà).</small>
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="for-5" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="for-5" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Dividendes & Intérêts :</span> Relevés bancaires mentionnant le montant <span class="underline text-red-600">brut</span>.
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="for-6" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="for-6" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Cryptoactifs :</span> Soldes des "wallets" au 31.12.
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 : Immobilier -->
+        <section class="mb-8 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-slate-200">
+                <h2 class="text-xl font-bold text-indigo-900 flex items-center">
+                    <span class="mr-3">3.</span> Immobilier (Suisse et Étranger)
+                </h2>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="flex items-start">
+                    <input type="checkbox" id="imm-1" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="imm-1" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Valeur fiscale :</span> Avis de valeur (Genève) ou Avis de Taxe Foncière / Acte d'achat (Étranger).
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="imm-2" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="imm-2" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Revenus & Usage :</span> Justificatif des loyers bruts encaissés ou mention si usage propre (résidence).
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="imm-3" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="imm-3" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Dettes :</span> Attestations bancaires du capital au 31.12 et des intérêts payés.
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="imm-4" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="imm-4" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Entretien :</span> Factures originales de travaux de maintien de la valeur (réparations, peinture).
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 : Successions & Dons -->
+        <section class="mb-8 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-slate-200">
+                <h2 class="text-xl font-bold text-indigo-900 flex items-center">
+                    <span class="mr-3">4.</span> Successions et Donations
+                </h2>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="flex items-start">
+                    <input type="checkbox" id="suc-1" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="suc-1" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Héritages reçus :</span> Copie de l'inventaire fiscal ou de l'acte de partage notarié.
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="suc-2" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="suc-2" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Donations :</span> Acte de donation ou preuve bancaire de transfert (reçu ou effectué).
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5 : Prévoyance & Santé -->
+        <section class="mb-8 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-slate-200">
+                <h2 class="text-xl font-bold text-indigo-900 flex items-center">
+                    <span class="mr-3">5.</span> Prévoyance et Santé
+                </h2>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="flex items-start">
+                    <input type="checkbox" id="pre-1" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="pre-1" class="ml-3 block text-gray-700">
+                        <span class="font-bold">3ème pilier A (Lié) :</span> Attestation annuelle de versement (déductible).
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="pre-2" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="pre-2" class="ml-3 block text-gray-700">
+                        <span class="font-bold">3ème pilier B / Assurance-vie :</span> 
+                        <br>• Attestation de <span class="underline">valeur de rachat</span> au 31.12.2025 (pour la fortune).
+                        <br>• Justificatif des primes payées (pour le forfait assurances).
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="pre-3" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="pre-3" class="ml-3 block text-gray-700">
+                        <span class="font-bold">LPP (2ème pilier) :</span> Attestation de <span class="underline">rachat</span> d'années de cotisation.
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="pre-4" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="pre-4" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Assurance-maladie :</span> Attestation fiscale des primes et récapitulatif des frais à charge (franchise/quote-part).
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="pre-5" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="pre-5" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Frais médicaux :</span> Factures de dentiste, lunettes, appareils acoustiques ou soins non remboursés.
+                        <br><small class="text-slate-500 italic">Note : Seule la part restée à votre charge et dépassant 5% de votre revenu net est déductible (LIPP).</small>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6 : Déductions & Charges -->
+        <section class="mb-8 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-slate-200">
+                <h2 class="text-xl font-bold text-indigo-900 flex items-center">
+                    <span class="mr-3">6.</span> Déductions et Charges
+                </h2>
+            </div>
+            <div class="p-6 space-y-4">
+                
+                <!-- Case Frais de déplacement -->
+                <div class="flex items-start">
+                    <input type="checkbox" id="ded-transp" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="ded-transp" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Frais de déplacement :</span> Justificatifs des abonnements de transports publics ou calcul des frais kilométriques.
+                    </label>
+                </div>
+
+                <!-- Focus Transport -->
+                <div class="bg-slate-50 p-5 rounded-xl mb-4 border border-slate-200">
+                    <h3 class="font-bold text-indigo-800 mb-3 underline italic text-sm">Conditions Véhicule Privé (LIPP) :</h3>
+                    <div class="text-xs text-slate-700 space-y-3">
+                        <div>
+                            <p class="font-semibold text-indigo-900 mb-1">1. Justification du calcul :</p>
+                            <p class="ml-3">Nombre de kilomètres (aller-retour) × 220 jours ouvrables <span class="text-indigo-600 font-semibold italic">(pour un taux d'activité de 100%)</span> × tarif kilométrique officiel (env. 0.70 CHF/km).</p>
+                        </div>
+                        
+                        <div>
+                            <p class="font-semibold text-indigo-900 mb-1">2. Conditions d'admissibilité (Non-raisonnabilité des TP) :</p>
+                            <ul class="list-disc ml-7 space-y-1">
+                                <li>Gain de temps significatif (> 1h par jour par rapport aux transports publics).</li>
+                                <li>Absence totale de desserte ou horaires incompatibles entre le domicile et le lieu de travail.</li>
+                                <li>Raisons de santé impératives (infirmité, maladie) empêchant l'usage des transports publics.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-indigo-900 border-t pt-2 italic">3. Plafonds annuels maximums :</p>
+                            <div class="flex justify-around bg-white p-2 mt-1 rounded border border-indigo-100">
+                                <span class="font-bold text-indigo-700">ICC (Cantonal) : CHF 534.-</span>
+                                <span class="font-bold text-indigo-700">IFD (Fédéral) : CHF 3'300.-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Frais de repas -->
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="ded-repas" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="ded-repas" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Frais de repas :</span> Précisez le nombre de jours où le repas de midi est pris hors du domicile.
+                        <br><small class="text-slate-500 italic">Déduction de 15 CHF par jour, montant annuel maximal de 3'200 CHF (pour une activité à 100%).</small>
+                    </label>
+                </div>
+
+                <!-- Case Autres Frais Professionnels -->
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="ded-frais-pro" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="ded-frais-pro" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Autres frais professionnels :</span> Choix entre déduction <span class="underline">forfaitaire</span> ou <span class="underline font-bold">frais effectifs</span>.
+                        <br><small class="text-slate-600 italic">Le forfait correspond à <span class="font-semibold">3% du salaire net (min. 600 CHF / max. 1'700 CHF)</span>.</small>
+                        <br><small class="text-slate-500 italic">Exemples : Matériel informatique, outillage, littérature spécialisée, cotisations professionnelles/syndicales, bureau à domicile.</small>
+                        <br><small class="text-indigo-700 font-semibold italic">Note : Si vous optez pour les frais effectifs (supérieurs au forfait), vous devez impérativement joindre l'intégralité des factures.</small>
+                    </label>
+                </div>
+
+                <!-- Checkbox Frais de Garde -->
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="ded-1" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="ded-1" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Justificatifs Frais de garde :</span> Attestations fiscales annuelles ou factures mensuelles acquittées.
+                    </label>
+                </div>
+
+                <!-- Focus Frais de Garde -->
+                <div class="bg-indigo-50/50 p-4 rounded-xl mb-4 border border-indigo-100 ml-8">
+                    <h3 class="font-bold text-indigo-800 mb-2 underline italic text-sm">Conditions Frais de Garde :</h3>
+                    <div class="text-xs text-slate-700 space-y-2">
+                        <p><span class="font-semibold text-indigo-900">Inclus :</span> Crèches, jardins d'enfants, mamans de jour (agréées AMAM), parascolaire (GIAP), centres aérés.</p>
+                        <p><span class="font-semibold text-indigo-900">Justificatifs :</span> Factures détaillées indiquant les montants <span class="font-bold underline">nets</span> (après déduction des subventions).</p>
+                        <p><span class="font-semibold text-indigo-900">Limites :</span> Enfant de moins de 14 ans au 31.12.</p>
+                        <p><span class="font-semibold text-indigo-900 italic border-t pt-1">Plafonds par enfant : ICC CHF 25'048.- | IFD CHF 25'000.-</span></p>
+                    </div>
+                </div>
+
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="ded-2" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="ded-2" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Formation :</span> Factures de cours et examens professionnels (max. CHF 12'900.-).
+                    </label>
+                </div>
+                <div class="flex items-start border-t pt-4">
+                    <input type="checkbox" id="ded-3" class="checkbox-custom mt-1.5 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="ded-3" class="ml-3 block text-gray-700">
+                        <span class="font-bold">Pensions alimentaires versées :</span> Copie du jugement de divorce et avis de débits bancaires.
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7 : Administration -->
+        <section class="mb-8 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-slate-200">
+                <h2 class="text-xl font-bold text-indigo-900 flex items-center">
+                    <span class="mr-3">7.</span> Administration
+                </h2>
+            </div>
+            <div class="p-6 space-y-4 text-gray-700">
+                <p>• <span class="font-bold italic text-red-700">Identifiants :</span> Lettre de l'AFC (reçue en Janvier) avec n° de contribuable et code.</p>
+                <p>• <span class="font-bold italic">Historique :</span> Copie de votre déclaration 2024.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="container mx-auto px-4 max-w-4xl text-center text-slate-500 text-sm mt-8 no-print">
+        <p>© 2026 Assistant Impôt - Conforme au Guide Fiscal Genevois 2025.</p>
+        <p class="mt-2">Ce document est une aide à la préparation et ne remplace pas un conseil fiscal personnalisé.</p>
+    </footer>
+
+    <script>
+        function copyCurrentUrl() {
+            const el = document.createElement('textarea');
+            el.value = window.location.href;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            const alert = document.getElementById('copy-alert');
+            alert.classList.remove('hidden');
+            setTimeout(() => { alert.classList.add('hidden'); }, 3000);
+        }
+    </script>
+</body>
+</html>
